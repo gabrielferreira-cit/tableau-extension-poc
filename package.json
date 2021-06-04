@@ -2,7 +2,7 @@
   "name": "gdem-ext-poc",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://gabrielferreira-cit.github.io/tableau-extension-poc",
   "dependencies": {
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
