@@ -1,3 +1,4 @@
+import { TableauEvent, TableauWorksheetEvent } from '@tableau/extensions-api-types';
 import { useEffect } from 'react';
 
 const SHEET_NAME = 'All Team Memeber Engagement';
@@ -6,6 +7,8 @@ export const Init = () => {
 
   useEffect(() => {
     tableau.extensions.initializeAsync().then(() => {
+      console.info('PoC Extension Initialized!');
+
       const dashboardContent = tableau.extensions.dashboardContent;
 
       if (!dashboardContent) {
@@ -26,9 +29,18 @@ export const Init = () => {
 
       const unregisterHandler = worksheet.addEventListener(
         tableau.TableauEventType.MarkSelectionChanged,
-        () => {
-          console.log(`It's working :)`);
-          alert('Working');
+        async (event: TableauEvent) => {
+
+          const url = `.${window.location.pathname}update`;
+
+          let closePayload = await tableau.extensions.ui.displayDialogAsync(url, '', {width: 600, height: 450});
+
+          if (closePayload) {
+            const dataSources = await (event as TableauWorksheetEvent).worksheet.getDataSourcesAsync();
+            dataSources[0].refreshAsync();
+          } else {
+            throw new Error('Error while loading data source.');
+          }
         }
       );      
     });
