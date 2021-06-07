@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@tableau/extensions-api-types": "^1.5.2",
     "@types/react-router-dom": "^5.1.7"
   }
 }
